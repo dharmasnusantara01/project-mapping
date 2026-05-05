@@ -31,6 +31,8 @@ Route::middleware('auth')
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/instansi',                     [InstansiController::class, 'index'])->name('instansi.index');
+        Route::get('/instansi/import',              [InstansiController::class, 'importForm'])->name('instansi.import');
+        Route::post('/instansi/import',             [InstansiController::class, 'import'])->name('instansi.import.process');
         Route::get('/instansi/create',              [InstansiController::class, 'create'])->name('instansi.create');
         Route::post('/instansi',                    [InstansiController::class, 'store'])->name('instansi.store');
         Route::get('/instansi/{instansi}/edit',     [InstansiController::class, 'edit'])->name('instansi.edit');

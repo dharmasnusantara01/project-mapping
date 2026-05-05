@@ -8,10 +8,26 @@
             <h2 class="text-lg font-semibold text-white">Daftar Instansi</h2>
             <p class="mt-0.5 text-sm text-teal-100/70">Kelola instansi untuk peta sebaran publik.</p>
         </div>
-        <a href="{{ route('admin.instansi.create') }}" class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold">
-            + Instansi Baru
-        </a>
+        <div class="flex gap-2">
+            <a href="{{ route('admin.instansi.import') }}" class="btn-ghost rounded-lg px-4 py-2 text-sm font-semibold">
+                ↑ Import CSV
+            </a>
+            <a href="{{ route('admin.instansi.create') }}" class="btn-primary rounded-lg px-4 py-2 text-sm font-semibold">
+                + Instansi Baru
+            </a>
+        </div>
     </div>
+
+    @if (session('importErrors') && count(session('importErrors')))
+        <div class="mb-4 rounded-lg border border-amber-400/30 bg-amber-500/10 p-3 text-xs text-amber-100">
+            <div class="font-semibold">Beberapa baris di-skip:</div>
+            <ul class="mt-1 list-inside list-disc space-y-0.5">
+                @foreach (session('importErrors') as $err)
+                    <li>{{ $err }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="glass overflow-hidden rounded-2xl">
         <table class="w-full text-left text-sm">
