@@ -13,6 +13,7 @@
     @php
         $defaultLat = old('latitude',  $instansi->latitude  ?? -0.5);
         $defaultLng = old('longitude', $instansi->longitude ?? 114.0);
+        $defaultZoom = $instansi->exists ? 14 : 6;
     @endphp
 
     <form method="POST"
@@ -157,14 +158,16 @@
                     <div class="grid grid-cols-2 gap-2">
                         <div>
                             <label class="text-xs font-medium text-teal-200/80">Latitude</label>
-                            <input id="lat-input" name="latitude" type="number" step="0.0000001" required
+                            <input id="lat-input" name="latitude" type="text" inputmode="decimal"
+                                   pattern="-?\d+(\.\d+)?" required
                                    value="{{ $defaultLat }}"
                                    class="input mt-1 w-full rounded-lg px-3 py-2 text-sm">
                             @error('latitude') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
                         </div>
                         <div>
                             <label class="text-xs font-medium text-teal-200/80">Longitude</label>
-                            <input id="lng-input" name="longitude" type="number" step="0.0000001" required
+                            <input id="lng-input" name="longitude" type="text" inputmode="decimal"
+                                   pattern="-?\d+(\.\d+)?" required
                                    value="{{ $defaultLng }}"
                                    class="input mt-1 w-full rounded-lg px-3 py-2 text-sm">
                             @error('longitude') <p class="mt-1 text-xs text-red-300">{{ $message }}</p> @enderror
@@ -182,7 +185,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const map = L.map('form-map').setView([{{ $defaultLat }}, {{ $defaultLng }}], 6);
+            const map = L.map('form-map').setView([{{ $defaultLat }}, {{ $defaultLng }}], {{ $defaultZoom }});
             L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
                 maxZoom: 18, subdomains: 'abcd',
             }).addTo(map);
