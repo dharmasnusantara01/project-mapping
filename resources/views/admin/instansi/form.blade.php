@@ -16,6 +16,13 @@
         $defaultZoom = $instansi->exists ? 14 : 6;
     @endphp
 
+    @if ($instansi->exists && auth()->user()->canPublishInstansi())
+        <form id="publish-form" method="POST" action="{{ route('admin.instansi.publish', $instansi) }}" class="hidden">
+            @csrf
+            <input type="hidden" name="publish" value="{{ $instansi->is_public ? 0 : 1 }}">
+        </form>
+    @endif
+
     <form method="POST"
           action="{{ $instansi->exists ? route('admin.instansi.update', $instansi) : route('admin.instansi.store') }}"
           class="grid grid-cols-1 gap-5 lg:grid-cols-3">
@@ -122,13 +129,10 @@
                 @endif
 
                 @if ($instansi->exists && auth()->user()->canPublishInstansi())
-                    <form method="POST" action="{{ route('admin.instansi.publish', $instansi) }}" class="mt-4">
-                        @csrf
-                        <input type="hidden" name="publish" value="{{ $instansi->is_public ? 0 : 1 }}">
-                        <button class="{{ $instansi->is_public ? 'btn-ghost' : 'btn-primary' }} w-full rounded-lg px-3 py-2 text-xs font-semibold">
-                            {{ $instansi->is_public ? 'Tarik dari Publikasi' : 'Publikasikan ke Peta' }}
-                        </button>
-                    </form>
+                    <button type="submit" form="publish-form"
+                            class="{{ $instansi->is_public ? 'btn-ghost' : 'btn-primary' }} mt-4 w-full rounded-lg px-3 py-2 text-xs font-semibold">
+                        {{ $instansi->is_public ? 'Tarik dari Publikasi' : 'Publikasikan ke Peta' }}
+                    </button>
                 @elseif ($instansi->exists)
                     <p class="mt-3 rounded-lg border border-amber-400/20 bg-amber-500/10 px-3 py-2 text-[11px] text-amber-200">
                         Hanya Manajer Sales / Superadmin yang bisa mempublikasikan instansi.

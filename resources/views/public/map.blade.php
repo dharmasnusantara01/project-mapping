@@ -252,7 +252,7 @@
     const map = L.map('map', {
         zoomControl: true,
         attributionControl: true,
-    }).setView([-0.5, 114.0], 6);
+    }).setView([-0.5, 114.0], 7);
 
     L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
         maxZoom: 20,
@@ -267,6 +267,7 @@
         sectors: new Set(Object.keys(SECTORS)),
         witel: '',
         am: '',
+        userInteracted: false,
     };
 
     function flagIcon(color) {
@@ -330,6 +331,17 @@
             return m;
         });
         cluster.addLayers(markers);
+
+        // Auto-zoom only after the user changes a filter — leave the
+        // initial view alone so it loads at the configured Kalimantan focus.
+        if (state.userInteracted) {
+            if (filtered.length === 1) {
+                map.setView([filtered[0].latitude, filtered[0].longitude], 16, { animate: true });
+            } else if (filtered.length > 1) {
+                const bounds = L.latLngBounds(filtered.map(p => [p.latitude, p.longitude]));
+                map.fitBounds(bounds, { padding: [20, 20], maxZoom: 16, animate: true });
+            }
+        }
 
         updateStats(filtered);
         document.getElementById('empty-state').classList.toggle('show', filtered.length === 0);
@@ -402,19 +414,22 @@
         document.querySelectorAll('[data-filter="sector"]').forEach(cb => {
             cb.addEventListener('change', () => {
                 cb.checked ? state.sectors.add(cb.value) : state.sectors.delete(cb.value);
+                state.userInteracted = true;
                 applyFilters();
             });
         });
         document.getElementById('witel-filter').addEventListener('change', e => {
-            state.witel = e.target.value; applyFilters();
+            state.witel = e.target.value; state.userInteracted = true; applyFilters();
         });
         document.getElementById('am-filter').addEventListener('change', e => {
-            state.am = e.target.value; applyFilters();
+            state.am = e.target.value; state.userInteracted = true; applyFilters();
         });
         document.getElementById('reset-filter').addEventListener('click', () => {
             document.querySelectorAll('[data-filter="sector"]').forEach(cb => { cb.checked = true; state.sectors.add(cb.value); });
             document.getElementById('witel-filter').value = ''; state.witel = '';
             document.getElementById('am-filter').value = '';    state.am = '';
+            map.setView([-0.5, 114.0], 7, { animate: true });
+            state.userInteracted = false;
             applyFilters();
         });
         document.getElementById('toggle-presentation').addEventListener('click', () => {

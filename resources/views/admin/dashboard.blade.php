@@ -262,6 +262,13 @@
                     fillOpacity: 0.9,
                 }).bindTooltip(p.name, { direction: 'top' }).addTo(map);
             });
+
+            if (DASH.points.length === 1) {
+                map.setView([DASH.points[0].lat, DASH.points[0].lng], 12);
+            } else if (DASH.points.length > 1) {
+                const bounds = L.latLngBounds(DASH.points.map(p => [p.lat, p.lng]));
+                map.fitBounds(bounds, { padding: [30, 30], maxZoom: 12 });
+            }
         });
     </script>
 @endpush
