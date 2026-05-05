@@ -5,13 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Sector extends Model
+class AccountManager extends Model
 {
-    protected $fillable = ['name', 'slug', 'color', 'order'];
-
-    protected $casts = [
-        'order' => 'int',
-    ];
+    protected $fillable = ['name', 'nik', 'email', 'phone'];
 
     public function instansi(): HasMany
     {

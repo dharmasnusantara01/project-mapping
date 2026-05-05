@@ -1,13 +1,16 @@
 <?php
 
-use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\AccountManagerController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InstansiController;
+use App\Http\Controllers\Admin\WitelController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PublicMapController;
 use Illuminate\Support\Facades\Route;
 
 // ───── Public ─────────────────────────────────────────────────────────────
-Route::get('/',                  [PublicMapController::class, 'index'])->name('public.map');
-Route::get('/api/public/projects', [PublicMapController::class, 'projects'])->name('public.projects');
+Route::get('/',                    [PublicMapController::class, 'index'])->name('public.map');
+Route::get('/api/public/instansi', [PublicMapController::class, 'instansi'])->name('public.instansi');
 
 // ───── Auth ───────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -24,14 +27,19 @@ Route::middleware('auth')
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-        Route::get('/', fn () => redirect()->route('admin.projects.index'))->name('home');
+        Route::get('/', fn () => redirect()->route('admin.dashboard'))->name('home');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::get('/projects',                    [AdminProjectController::class, 'index'])->name('projects.index');
-        Route::get('/projects/create',             [AdminProjectController::class, 'create'])->name('projects.create');
-        Route::post('/projects',                   [AdminProjectController::class, 'store'])->name('projects.store');
-        Route::get('/projects/{project}/edit',     [AdminProjectController::class, 'edit'])->name('projects.edit');
-        Route::put('/projects/{project}',          [AdminProjectController::class, 'update'])->name('projects.update');
-        Route::post('/projects/{project}/publish', [AdminProjectController::class, 'publish'])->name('projects.publish');
+        Route::get('/instansi',                     [InstansiController::class, 'index'])->name('instansi.index');
+        Route::get('/instansi/create',              [InstansiController::class, 'create'])->name('instansi.create');
+        Route::post('/instansi',                    [InstansiController::class, 'store'])->name('instansi.store');
+        Route::get('/instansi/{instansi}/edit',     [InstansiController::class, 'edit'])->name('instansi.edit');
+        Route::put('/instansi/{instansi}',          [InstansiController::class, 'update'])->name('instansi.update');
+        Route::post('/instansi/{instansi}/publish', [InstansiController::class, 'publish'])->name('instansi.publish');
 
-
+        Route::resource('witel', WitelController::class)->except(['show']);
+        Route::resource('account-managers', AccountManagerController::class)
+            ->parameter('account-managers', 'accountManager')
+            ->except(['show'])
+            ->names('account_managers');
     });

@@ -8,21 +8,20 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('city_references', function (Blueprint $table) {
+        Schema::create('account_managers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('province');
-            $table->decimal('latitude', 10, 7);
-            $table->decimal('longitude', 10, 7);
+            $table->string('nik')->nullable()->unique();
+            $table->string('email')->nullable();
+            $table->string('phone', 30)->nullable();
             $table->timestamps();
 
-            $table->unique(['province', 'name']);
             $table->index('name');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('city_references');
+        Schema::dropIfExists('account_managers');
     }
 };

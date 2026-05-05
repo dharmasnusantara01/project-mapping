@@ -96,10 +96,25 @@
             </div>
             <nav class="mt-4 space-y-1 px-2 text-sm">
 
-                <a href="{{ route('admin.projects.index') }}"
-                   class="nav-link flex items-center gap-3 rounded-md px-3 py-2 {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.dashboard') }}"
+                   class="nav-link flex items-center gap-3 rounded-md px-3 py-2 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4a1 1 0 011-1h5a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 10a1 1 0 011-1h5a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zm9-10a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 7a1 1 0 011-1h3a1 1 0 011 1v5a1 1 0 01-1 1h-3a1 1 0 01-1-1v-5z"/></svg>
+                    Dashboard
+                </a>
+                <a href="{{ route('admin.instansi.index') }}"
+                   class="nav-link flex items-center gap-3 rounded-md px-3 py-2 {{ request()->routeIs('admin.instansi.*') ? 'active' : '' }}">
                     <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2H3V4zm0 4h14v8a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm3 2v2h2v-2H6zm0 4v2h2v-2H6z"/></svg>
-                    Peta Project
+                    Instansi
+                </a>
+                <a href="{{ route('admin.witel.index') }}"
+                   class="nav-link flex items-center gap-3 rounded-md px-3 py-2 {{ request()->routeIs('admin.witel.*') ? 'active' : '' }}">
+                    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3 2v2h2V7H5zm4 0v2h2V7H9zm4 0v2h2V7h-2zM5 11v2h2v-2H5zm4 0v2h2v-2H9zm4 0v2h2v-2h-2z"/></svg>
+                    Witel
+                </a>
+                <a href="{{ route('admin.account_managers.index') }}"
+                   class="nav-link flex items-center gap-3 rounded-md px-3 py-2 {{ request()->routeIs('admin.account_managers.*') ? 'active' : '' }}">
+                    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/></svg>
+                    Account Manager
                 </a>
                 <a href="{{ route('public.map') }}" target="_blank"
                    class="nav-link flex items-center gap-3 rounded-md px-3 py-2">

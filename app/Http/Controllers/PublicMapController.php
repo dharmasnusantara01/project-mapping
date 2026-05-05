@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
+use App\Models\Instansi;
 use App\Models\Sector;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
@@ -18,30 +18,38 @@ class PublicMapController extends Controller
         ]);
     }
 
-    public function projects(): JsonResponse
+    public function instansi(): JsonResponse
     {
-        $payload = Cache::remember('public.projects', now()->addMinutes(5), function () {
-            return Project::query()
+        $payload = Cache::remember('public.instansi', now()->addMinutes(5), function () {
+            return Instansi::query()
                 ->published()
-                ->with(['sector:id,name,slug,color', 'primaryLocation'])
+                ->with([
+                    'sector:id,name,slug,color',
+                    'witel:id,name',
+                    'accountManager:id,name',
+                ])
                 ->get()
-                ->filter(fn ($p) => $p->primaryLocation)
-                ->map(fn ($p) => [
-                    'id'            => $p->id,
-                    'name'          => $p->name,
-                    'customer_name' => $p->customer_name,
-                    'sector'        => [
-                        'name'  => $p->sector->name,
-                        'slug'  => $p->sector->slug,
-                        'color' => $p->sector->color,
+                ->map(fn ($i) => [
+                    'id'              => $i->id,
+                    'nama_instansi'   => $i->nama_instansi,
+                    'alamat_instansi' => $i->alamat_instansi,
+                    'telpon_instansi' => $i->telpon_instansi,
+                    'latitude'        => (float) $i->latitude,
+                    'longitude'       => (float) $i->longitude,
+                    'witel'           => [
+                        'id'   => $i->witel->id,
+                        'name' => $i->witel->name,
                     ],
-                    'city'      => $p->primaryLocation->city,
-                    'province'  => $p->primaryLocation->province,
-                    'latitude'  => (float) $p->primaryLocation->latitude,
-                    'longitude' => (float) $p->primaryLocation->longitude,
-                    'year'      => $p->year,
-                    'status'    => $p->public_status->value,
-                    'summary'   => $p->public_summary,
+                    'account_manager' => [
+                        'id'   => $i->accountManager->id,
+                        'name' => $i->accountManager->name,
+                    ],
+                    'sector' => [
+                        'name'  => $i->sector->name,
+                        'slug'  => $i->sector->slug,
+                        'color' => $i->sector->color,
+                    ],
+                    'summary' => $i->public_summary,
                 ])
                 ->values()
                 ->toArray();

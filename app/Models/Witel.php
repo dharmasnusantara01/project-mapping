@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Sector extends Model
+class Witel extends Model
 {
-    protected $fillable = ['name', 'slug', 'color', 'order'];
+    protected $table = 'witel';
 
-    protected $casts = [
-        'order' => 'int',
-    ];
+    protected $fillable = ['name', 'code'];
 
     public function instansi(): HasMany
     {

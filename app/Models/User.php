@@ -26,7 +26,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function canPublishProjects(): bool
+    public function canPublishInstansi(): bool
     {
         return $this->role->canPublish();
     }
