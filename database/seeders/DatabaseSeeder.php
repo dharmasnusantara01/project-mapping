@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             WitelSeeder::class,
             AccountManagerSeeder::class,
             InstansiSeeder::class,
+            ProjectSeeder::class,
         ]);
     }
 }

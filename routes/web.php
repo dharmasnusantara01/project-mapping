@@ -3,18 +3,19 @@
 use App\Http\Controllers\Admin\AccountManagerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InstansiController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\WitelController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PublicMapController;
 use Illuminate\Support\Facades\Route;
 
 // ───── Public ─────────────────────────────────────────────────────────────
-Route::get('/',                    [PublicMapController::class, 'index'])->name('public.map');
+Route::get('/',                    [PublicMapController::class, 'index'])->name('public.map')->middleware('auth');
 Route::get('/api/public/instansi', [PublicMapController::class, 'instansi'])->name('public.instansi');
 
 // ───── Auth ───────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
-    Route::get('/login',  [LoginController::class, 'show'])->name('login');
+    Route::get('/login/dashboard-interaktif',  [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'store']);
 });
 
@@ -44,4 +45,17 @@ Route::middleware('auth')
             ->parameter('account-managers', 'accountManager')
             ->except(['show'])
             ->names('account_managers');
+
+        // Sales Pipeline Projects
+        Route::get('/projects',                         [ProjectController::class, 'index'])->name('projects.index');
+        Route::get('/projects/create',                  [ProjectController::class, 'create'])->name('projects.create');
+        Route::post('/projects',                        [ProjectController::class, 'store'])->name('projects.store');
+        Route::get('/instansi/{instansi}/projects/create', [ProjectController::class, 'create'])->name('instansi.projects.create');
+        Route::post('/instansi/{instansi}/projects',    [ProjectController::class, 'store'])->name('instansi.projects.store');
+        Route::get('/projects/{project}/edit',          [ProjectController::class, 'edit'])->name('projects.edit');
+        Route::put('/projects/{project}',               [ProjectController::class, 'update'])->name('projects.update');
+        Route::delete('/projects/{project}',            [ProjectController::class, 'destroy'])->name('projects.destroy');
+        Route::post('/projects/{project}/advance',      [ProjectController::class, 'advance'])->name('projects.advance');
+        Route::post('/projects/{project}/lost',         [ProjectController::class, 'lost'])->name('projects.lost');
+        Route::get('/projects/{project}/file/{type}',   [ProjectController::class, 'file'])->name('projects.file');
     });

@@ -187,6 +187,55 @@
         </div>
     </form>
 
+    @if ($instansi->exists)
+        @php $instansiProjects = $instansi->projects()->latest('updated_at')->get(); @endphp
+        <div class="glass mt-5 overflow-hidden rounded-2xl">
+            <div class="flex items-center justify-between border-b border-white/5 px-5 py-3">
+                <div>
+                    <h3 class="text-sm font-semibold text-white">Projects</h3>
+                    <p class="text-[11px] text-teal-200/60">Sales pipeline yang menempel pada instansi ini.</p>
+                </div>
+                <a href="{{ route('admin.instansi.projects.create', $instansi) }}"
+                   class="btn-primary rounded-lg px-3 py-1.5 text-xs font-semibold">+ Project Baru</a>
+            </div>
+            <table class="w-full text-left text-sm">
+                <thead class="bg-white/5 text-[11px] uppercase tracking-wider text-teal-200/70">
+                    <tr>
+                        <th class="px-5 py-2.5">Nama Project</th>
+                        <th class="px-5 py-2.5">Pelanggan</th>
+                        <th class="px-5 py-2.5">Stage</th>
+                        <th class="px-5 py-2.5">Revenue</th>
+                        <th class="px-5 py-2.5">Est. Go-Live</th>
+                        <th class="px-5 py-2.5"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    @forelse ($instansiProjects as $p)
+                        <tr class="hover:bg-white/5">
+                            <td class="px-5 py-2.5 text-white">{{ $p->nama_project }}</td>
+                            <td class="px-5 py-2.5 text-teal-100/85">{{ $p->nama_pelanggan }}</td>
+                            <td class="px-5 py-2.5">
+                                <span class="rounded-full px-2 py-0.5 text-[10.5px] font-bold text-white"
+                                      style="background: {{ $p->stage->color() }};">{{ $p->stage->label() }}</span>
+                            </td>
+                            <td class="px-5 py-2.5 text-emerald-300">Rp {{ number_format((float) $p->revenue, 0, ',', '.') }}</td>
+                            <td class="px-5 py-2.5 text-[11px] text-teal-200/70">{{ $p->estimasi_go_live?->translatedFormat('M Y') }}</td>
+                            <td class="px-5 py-2.5 text-right">
+                                <a href="{{ route('admin.projects.edit', $p) }}" class="btn-ghost rounded-lg px-3 py-1.5 text-xs">Edit</a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="px-5 py-8 text-center text-sm text-teal-200/60">
+                                Belum ada project. Klik <span class="text-white">+ Project Baru</span>.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    @endif
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const map = L.map('form-map').setView([{{ $defaultLat }}, {{ $defaultLng }}], {{ $defaultZoom }});

@@ -30,4 +30,14 @@ class User extends Authenticatable
     {
         return $this->role->canPublish();
     }
+
+    public function canAdvanceToWin(): bool
+    {
+        return $this->role->canPublish();
+    }
+
+    public function canDeleteProject(): bool
+    {
+        return $this->role->canPublish();
+    }
 }

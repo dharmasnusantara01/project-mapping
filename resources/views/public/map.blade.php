@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoKarya — Peta Sebaran Instansi</title>
+    <title>GridCore — Peta Sebaran Instansi</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet">
 
@@ -147,7 +147,7 @@
             GK
         </div>
         <div>
-            <div class="text-sm font-semibold leading-tight text-slate-800">GeoKarya</div>
+            <div class="text-sm font-semibold leading-tight text-slate-800">GridCore</div>
             <div class="text-[10px] uppercase tracking-wider text-slate-400">Peta Sebaran Instansi</div>
         </div>
     </div>

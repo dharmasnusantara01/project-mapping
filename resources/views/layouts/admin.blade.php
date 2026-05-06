@@ -90,7 +90,7 @@
                     GK
                 </div>
                 <div>
-                    <div class="text-sm font-semibold leading-tight" style="color:var(--text-hi)">GeoKarya</div>
+                    <div class="text-sm font-semibold leading-tight" style="color:var(--text-hi)">GridCore</div>
                     <div class="text-[10px] uppercase tracking-wider" style="color:var(--text-lo)">Admin Panel</div>
                 </div>
             </div>
@@ -100,6 +100,11 @@
                    class="nav-link flex items-center gap-3 rounded-md px-3 py-2 {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M3 4a1 1 0 011-1h5a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 10a1 1 0 011-1h5a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zm9-10a1 1 0 011-1h3a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1V4zm0 7a1 1 0 011-1h3a1 1 0 011 1v5a1 1 0 01-1 1h-3a1 1 0 01-1-1v-5z"/></svg>
                     Dashboard
+                </a>
+                <a href="{{ route('admin.projects.index') }}"
+                   class="nav-link flex items-center gap-3 rounded-md px-3 py-2 {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
+                    <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 4h2v8H5V7zm4 4h2v4H9v-4zm4-2h2v6h-2V9z"/></svg>
+                    Pipeline Project
                 </a>
                 <a href="{{ route('admin.instansi.index') }}"
                    class="nav-link flex items-center gap-3 rounded-md px-3 py-2 {{ request()->routeIs('admin.instansi.*') ? 'active' : '' }}">

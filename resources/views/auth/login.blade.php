@@ -1,4 +1,4 @@
-@php $appName = 'GeoKarya'; @endphp
+@php $appName = 'GridCore'; @endphp
 <!DOCTYPE html>
 <html lang="id" class="h-full">
 <head>
@@ -161,8 +161,8 @@
                         </svg>
                     </div>
                     <div>
-                        <div class="text-base font-bold leading-tight" style="color:var(--text-hi)">GeoKarya</div>
-                        <div class="text-[10px] font-medium uppercase tracking-[.15em]" style="color:var(--text-lo)">Portofolio Project Interaktif</div>
+                        <div class="text-base font-bold leading-tight" style="color:var(--text-hi)">GridCore</div>
+                        <div class="text-[10px] font-medium uppercase tracking-[.15em]" style="color:var(--text-lo)">Monitoring System yang Kuat dan Terukur</div>
                     </div>
                 </div>
 
