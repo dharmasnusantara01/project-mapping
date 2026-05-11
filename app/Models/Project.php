@@ -32,16 +32,18 @@ class Project extends Model
         'file_npwp',
         'lost_reason',
         'created_by',
+        'last_stale_alert_at',
     ];
 
     protected $casts = [
-        'stage'            => ProjectStage::class,
-        'division'         => Division::class,
-        'estimasi_go_live' => 'date',
-        'tanggal_win'      => 'date',
-        'tanggal_go_live'  => 'date',
-        'kontrak_sampai'   => 'date',
-        'revenue'          => 'decimal:2',
+        'stage'               => ProjectStage::class,
+        'division'            => Division::class,
+        'estimasi_go_live'    => 'date',
+        'tanggal_win'         => 'date',
+        'tanggal_go_live'     => 'date',
+        'kontrak_sampai'      => 'date',
+        'last_stale_alert_at' => 'datetime',
+        'revenue'             => 'decimal:2',
     ];
 
     protected static function booted(): void

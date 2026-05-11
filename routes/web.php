@@ -15,7 +15,7 @@ Route::get('/api/public/instansi', [PublicMapController::class, 'instansi'])->na
 
 // ───── Auth ───────────────────────────────────────────────────────────────
 Route::middleware('guest')->group(function () {
-    Route::get('/login/dashboard-interaktif',  [LoginController::class, 'show'])->name('login');
+    Route::get('/login/dashboard-vertikal',  [LoginController::class, 'show'])->name('login');
     Route::post('/login', [LoginController::class, 'store']);
 });
 
@@ -45,6 +45,9 @@ Route::middleware('auth')
             ->parameter('account-managers', 'accountManager')
             ->except(['show'])
             ->names('account_managers');
+        Route::post('/account-managers/{accountManager}/test-telegram',
+            [AccountManagerController::class, 'testTelegram'])
+            ->name('account_managers.test_telegram');
 
         // Sales Pipeline Projects
         Route::get('/projects',                         [ProjectController::class, 'index'])->name('projects.index');
